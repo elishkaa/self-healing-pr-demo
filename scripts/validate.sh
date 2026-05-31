@@ -14,15 +14,15 @@ fail() { echo -e "${RED}FAIL${RESET}  $1"; FAILURES+=("$1"); }
 echo -e "\n${BOLD}@Validator — K8s Manifest Check${RESET}"
 echo -e "Manifest: ${MANIFEST}\n"
 
-# --- kubeval ---
-if ! command -v kubeval &>/dev/null; then
-  echo -e "${RED}SKIP${RESET}  kubeval not installed — run: brew install kubeval"
+# --- kubeconform ---
+if ! command -v kubeconform &>/dev/null; then
+  echo -e "${RED}SKIP${RESET}  kubeconform not installed — run: brew install kubeconform"
 else
-  if kubeval "$MANIFEST" &>/dev/null; then
-    pass "kubeval schema validation"
+  if kubeconform -strict "$MANIFEST" &>/dev/null; then
+    pass "kubeconform schema validation"
   else
-    fail "kubeval schema validation"
-    kubeval "$MANIFEST"
+    fail "kubeconform schema validation"
+    kubeconform -strict "$MANIFEST"
   fi
 fi
 

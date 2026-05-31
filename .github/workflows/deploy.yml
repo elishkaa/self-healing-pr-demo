@@ -13,15 +13,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install kubeval
+      - name: Install kubeconform
         run: |
-          wget -q https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-          tar xf kubeval-linux-amd64.tar.gz
-          sudo mv kubeval /usr/local/bin/
+          wget -q https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xf kubeconform-linux-amd64.tar.gz
+          sudo mv kubeconform /usr/local/bin/
 
-      # This step will PASS — kubeval only checks schema, not security policy
-      - name: Validate manifest schema with kubeval
-        run: kubeval k8s/deployment.yaml
+      # This step will PASS — kubeconform only checks schema, not security policy
+      - name: Validate manifest schema with kubeconform
+        run: kubeconform -strict k8s/deployment.yaml
 
   security-lint:
     name: Security Policy Check
