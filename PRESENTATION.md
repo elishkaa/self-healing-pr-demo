@@ -52,7 +52,7 @@ bash scripts/validate.sh
 The core moment. Paste one prompt, watch the full cycle play out.
 
 ```
-fix-pipeline Review the latest failing CI log, patch the K8s deployment file
+/fix-pipeline Review the latest failing CI log, patch the K8s deployment file
 according to our security skill rules, and verify the fix locally.
 ```
 

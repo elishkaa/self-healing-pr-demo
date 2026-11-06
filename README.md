@@ -14,22 +14,23 @@ A junior developer pushed a K8s deployment with security flaws. The CI pipeline 
 |------|------|
 | `AGENTS.md` | Defines the AI agent team (@Architect, @Validator) and their permissions and guardrails |
 | `skills/k8s-remediation.md` | The playbook loaded automatically when a K8s security issue is detected |
-| `k8s/deployment.yaml` | The intentionally broken manifest — missing securityContext, resource limits, and a valid health probe |
-| `.github/workflows/deploy.yml` | The CI pipeline that catches the problem; correct by design, blocked by the bad manifest |
+| `k8s/deployment.yaml` | The deployment manifest. On `main` it is the finished, remediated state; `git checkout demo-start` restores the intentionally broken starting point (runs as root, no resource limits, `latest` tag, no readinessProbe, livenessProbe on `/`) |
+| `.github/workflows/deploy.yml` | The CI pipeline that catches the problem; correct by design, it fails on the `demo-start` manifest and passes on `main` |
 | `scripts/validate.sh` | Local validation script that mirrors what the @Validator agent runs in CI |
 | `app/` | The minimal Node.js service being deployed (Express, port 8080, `/healthz` endpoint) |
 
 ## How to Run the Demo
 
-1. Open this folder in Antigravity.
-2. Run the following prompt:
+1. Check out the broken starting point: `git checkout demo-start` (`main` holds the finished, remediated state).
+2. Open this folder in Antigravity.
+3. Run the following prompt:
 
    ```
    /fix-pipeline Review the latest failing CI log, patch the K8s deployment file
    according to our security skill rules, and verify the fix locally.
    ```
 
-3. Watch the agent team work: @Architect plans and patches, @Validator runs the checks, both stop and surface a diff for your approval before any PR is opened.
+4. Watch the agent team work: @Architect plans and patches, @Validator runs the checks, both stop and surface a diff for your approval before any PR is opened.
 
 ## The Point
 
