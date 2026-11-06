@@ -17,7 +17,7 @@ is missing a `securityContext`, or has no resource limits/requests.
 4. Fix the `livenessProbe` to point to `/healthz` on the correct port.
 5. Add a `readinessProbe` if missing (same endpoint, different timing).
 6. Replace `latest` image tags with a pinned version if known, or flag for human input.
-7. Trigger the @Validator agent to run `kubectl apply --dry-run=client` and `kubeval`.
+7. Trigger the @Validator agent to run `kubectl apply --dry-run=client` and `kubeconform -strict`.
 8. Surface a diff of all changes for human review. Do not open a PR automatically.
 
 ## Defaults
