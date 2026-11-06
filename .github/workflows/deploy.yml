@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # This step will FAIL because deployment.yaml runs as root (no securityContext)
+      # Fails at the demo-start state because deployment.yaml runs as root (no securityContext)
       - name: Check for securityContext
         run: |
           if ! grep -q "runAsNonRoot" k8s/deployment.yaml; then
@@ -40,7 +40,7 @@ jobs:
           fi
           echo "PASS: runAsNonRoot is set."
 
-      # This step will FAIL because deployment.yaml has no resource requests or limits
+      # Fails at the demo-start state because deployment.yaml has no resource requests or limits
       - name: Check for resource limits
         run: |
           if ! grep -q "resources:" k8s/deployment.yaml; then
@@ -49,7 +49,7 @@ jobs:
           fi
           echo "PASS: Resource limits are defined."
 
-      # This step will FAIL because the image tag is "latest"
+      # Fails at the demo-start state because the image tag is "latest"
       - name: Check for pinned image tags
         run: |
           if grep -qE "image:.*:latest" k8s/deployment.yaml; then
@@ -58,7 +58,7 @@ jobs:
           fi
           echo "PASS: Image tag is pinned."
 
-      # This step will FAIL because readinessProbe is missing entirely
+      # Fails at the demo-start state because readinessProbe is missing entirely
       - name: Check for readinessProbe
         run: |
           if ! grep -q "readinessProbe" k8s/deployment.yaml; then
@@ -67,7 +67,7 @@ jobs:
           fi
           echo "PASS: readinessProbe is defined."
 
-      # This step will FAIL because livenessProbe points to "/" instead of "/healthz"
+      # Fails at the demo-start state because livenessProbe points to "/" instead of "/healthz"
       - name: Check livenessProbe path
         run: |
           if grep -A3 "livenessProbe:" k8s/deployment.yaml | grep -q 'path: "/"'; then
